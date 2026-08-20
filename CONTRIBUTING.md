@@ -6,7 +6,7 @@ Thank you for your interest in contributing! 🎉
 
 ### 1. Fork the Repository
 ```bash
-git clone https://github.com/Qyroxen/Secret-Vault-Manager.git
+git clone https://github.com/AetherCodeHQ/Secret-Vault-Manager.git
 cd Secret-Vault-Manager
 ```
 
