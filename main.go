@@ -1,26 +1,28 @@
+
 package main
 
 import (
+	"crypto/sha256"
+	"crypto/sha512"
+	"encoding/hex"
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
-// secret_vault_manager - Secure secret management
-func secret_vault_manager(path string) {
-	fmt.Println("========================================")
-	fmt.Println("  Secret-Vault-Manager")
-	fmt.Println("  Secure secret management")
-	fmt.Println("========================================")
-	fmt.Println()
-	fmt.Println("Target:", path)
-	fmt.Println("Processing...")
-	fmt.Println("Done!")
-}
-
 func main() {
-	path := "."
-	if len(os.Args) > 1 {
-		path = os.Args[1]
+	if len(os.Args) < 2 {
+		fmt.Println("usage: Secret-Vault-Manager <file> [file...]")
+		os.Exit(1)
 	}
-	secret_vault_manager(path)
+	for _, p := range os.Args[1:] {
+		b, err := ioutil.ReadFile(p)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "read %s: %v\n", p, err)
+			os.Exit(1)
+		}
+		s256 := sha256.Sum256(b)
+		s512 := sha512.Sum512(b)
+		fmt.Printf("%s  sha256=%s  sha512=%s\n", p, hex.EncodeToString(s256[:]), hex.EncodeToString(s512[:]))
+	}
 }
